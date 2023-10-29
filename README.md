@@ -26,6 +26,13 @@ WebSocket
 fastapi?? Rust??
 
 
-### Database 접속정보
+## Database 접속정보
 Discord 채널에서 문의
 
+
+## 개발 이슈
+
+### API Server Windows Mongo DB Connection 문제
+1. https://letsencrypt.org/certs/lets-encrypt-r3.pem 다운로드  
+2. .pem -> .cer 이름 변경
+3. 더블클릭하여 인증서 등록
