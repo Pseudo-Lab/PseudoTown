@@ -5,7 +5,7 @@ app = FastAPI()
 app.include_router(auth.router.router)
 
 
-@app.get("/")
+@app.get("/hc")
 async def hc():
     return "server is running"
 
