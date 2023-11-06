@@ -1,6 +1,10 @@
 # PseudoLab Networking Application Project
 
+![login_image](images/login.png)
+
 네트워킹 주제 랜덤 픽  
+네트워킹 빙고  
+
 네트워킹 자동 매칭  
 실시간 채팅  
 메타버스(?)  
@@ -8,10 +12,8 @@
 
 # Tech Stack
 
-
 ## frontend
-Vue? svelte? React?
-
+svelte + svelte-kit
 
 ## backend
 
@@ -25,10 +27,8 @@ EC2 or Oracle Cloud
 WebSocket  
 fastapi?? Rust??
 
-
 ## Database 접속정보
 Discord 채널에서 문의
-
 
 ## 개발 이슈
 
