@@ -26,9 +26,13 @@ class UserModel(Model):
 
     @classmethod
     async def add_or_get_user(cls, name: str, phone: str, bingo: list) -> dict:
-        find_user = await engine.find(cls, cls.name == name and cls.phone == phone)
+        find_user = await engine.find_one(cls, cls.name == name and cls.phone == phone)
         if find_user:
-            return {"ok": True, "user_id": find_user.user_id, "bingo": find_user.bingo}
+            return {
+                "ok": True,
+                "user_id": find_user.user_id,
+                "bingo": find_user.bingo,
+            }
 
         user_id = await UserId.issue_id()
         new_user_info = {

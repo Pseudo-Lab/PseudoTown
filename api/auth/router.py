@@ -10,5 +10,6 @@ router = APIRouter(
 
 
 @router.post("/user/{name}")
-async def add_or_get_user(name: str, body: UserInfo):
-    return await UserModel.add_or_get_user(name, body.phone, body.bingo)
+async def add_or_get_user(name: str, body: UserInfo) -> dict:
+    result = await UserModel.add_or_get_user(name, body.phone, body.bingo)
+    return result
