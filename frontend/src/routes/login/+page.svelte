@@ -1,9 +1,18 @@
 <script>
+	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import { Page, Button, List, ListInput, BlockTitle } from 'konsta/svelte';
 	import pseudo_lab_icon from '$lib/images/pseudo_lab_logo.jpg';
 
 	let name = '';
 	let phoneNumber = '';
+
+	onMount(async () => {
+		let user_id = sessionStorage.getItem('user_id');
+		if (user_id) {
+			goto('/');
+		}
+	});
 
 	const onNameChange = (e) => {
 		name = e.target.value;
@@ -14,7 +23,8 @@
 	const onClickStart = (e) => {
 		console.log(name, phoneNumber);
 		let data = {
-			phone: phoneNumber
+			phone: phoneNumber,
+			bingo: [1, 2, 3]
 		};
 
 		fetch(`http://localhost:8000/auth/user/${name}`, {
@@ -25,15 +35,17 @@
 			body: JSON.stringify(data)
 		})
 			.then((response) => response.json())
-			.then((data) => console.log(data))
+			.then((data) => {
+				console.log(data.user_id, data.bingo);
+				sessionStorage.setItem('user_id', data.user_id);
+				sessionStorage.setItem('bingo', data.bingo);
+				goto('/');
+			})
 			.catch((error) => console.error(error));
 	};
 </script>
 
 <Page>
-	<img src={pseudo_lab_icon} width="100px" alt="PseudoLab" />
-	<BlockTitle>7th PseudoCon Networking</BlockTitle>
-
 	<List strongIos insetIos>
 		<ListInput label="이름" type="text" placeholder="이름을 입력하세요" onInput={onNameChange} />
 		<ListInput
