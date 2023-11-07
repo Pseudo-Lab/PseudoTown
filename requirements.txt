@@ -1,0 +1,4 @@
+fastapi
+uvicorn
+odmantic
+pydantic==1.*
