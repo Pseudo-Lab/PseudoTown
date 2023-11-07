@@ -18,10 +18,6 @@ jobs:
       with:
         clean: true
 
-    - name: Set up Docker Compose environment
-      run: |
-        echo "DB_KEY=$DB_KEY" >> .env
-
     - name: Set up Docker Compose
       run: |
         docker compose up -d --build
