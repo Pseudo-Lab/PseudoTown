@@ -26,8 +26,8 @@
 	<Navbar title="네트워킹 ID {user_id}" />
 
 	<Block class="flex space-x-2">
-		<Button large outline class="question-list-btn" href="/question-list/">Q&A 목록</Button>
-		<Button large outline class="bingo-btn" href="/bingo/">빙고 게임</Button>
+		<!-- <Button large outline class="question-list-btn" href="/question-list">Q&A 목록</Button> -->
+		<Button large outline class="bingo-btn" href="/bingo">빙고 게임</Button>
 	</Block>
 
 	<Block strong class="flex space-x-2">
