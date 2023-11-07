@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from auth.models import UserModel
+from auth.schema import UserInfo
 
 router = APIRouter(
     prefix="/auth",
@@ -9,6 +10,5 @@ router = APIRouter(
 
 
 @router.post("/user/{name}")
-async def add_or_update_user(name: str, body: dict):
-    result = await UserModel.add_or_update_user(name, body.get("phone"))
-    return {"ok": result}
+async def add_or_get_user(name: str, body: UserInfo):
+    return await UserModel.add_or_get_user(name, body.phone, body.bingo)
