@@ -1,0 +1,8 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "80:8000"
+    environment:
+      - DB_KEY=${DB_KEY}
