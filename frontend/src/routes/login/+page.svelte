@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { Page, Button, List, ListInput, BlockTitle } from 'konsta/svelte';
-	import pseudo_lab_icon from '$lib/images/pseudo_lab_logo.jpg';
+	import { apiUrl } from '../globalVars.svelte';
 
 	let name = '';
 	let phoneNumber = '';
@@ -22,17 +22,17 @@
 	};
 	const onClickStart = (e) => {
 		console.log(name, phoneNumber);
-		let data = {
+		let bodyData = {
 			phone: phoneNumber,
 			bingo: [1, 2, 3]
 		};
 
-		fetch(`http://localhost:8000/auth/user/${name}`, {
+		fetch(`${apiUrl}/auth/user/${name}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(data)
+			body: JSON.stringify(bodyData)
 		})
 			.then((response) => response.json())
 			.then((data) => {
