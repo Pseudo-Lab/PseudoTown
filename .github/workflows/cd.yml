@@ -18,9 +18,9 @@ jobs:
       with:
         clean: true
 
+    - name: Set up .env file
+      run: echo DB_KEY=${{ secrets.DB_KEY }} > .env
+
     - name: Set up Docker Compose
       run: |
         docker compose up -d --build
-
-    env:
-      DB_KEY: ${{ secrets.DB_KEY }}
