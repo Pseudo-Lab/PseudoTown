@@ -28,22 +28,27 @@
 			.then((data) => {
 				if (data.ok == true) board = data.board;
 				else {
-					bodyData = board[2][2] = 1;
-					fetch(`${apiUrl}/bingo/${user_id}`, {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify(bodyData)
-					})
-						.then((response) => response.json())
-						.then((data) => {
-							if (data.ok == true) board = data.board;
-							else {
-							}
-						})
-						.catch((error) => console.error(error));
+					newBingoBoard();
 				}
+			})
+			.catch((error) => console.error(error));
+	};
+
+	const newBingoBoard = () => {
+		board[2][2] = 0;
+		let bodyData = {
+			board: board
+		};
+		fetch(`${apiUrl}/bingo/${user_id}`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(bodyData)
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
 			})
 			.catch((error) => console.error(error));
 	};
@@ -58,11 +63,30 @@
 		console.log(user_id, my_bingo);
 
 		// api로 내 빙고판 가져오기
-		board = board;
+		getBingoBoard();
 	});
 
-	const gotoMain = () => {
-		goto('/');
+	const sendBingoBoard = (send_id) => {
+		if (user_id == send_id) {
+			console.log('보내는 사람과 받는 사람이 같습니다.');
+			return;
+		}
+
+		let bodyData = {
+			bingo: my_bingo
+		};
+		fetch(`${apiUrl}/bingo/${user_id}/add`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(bodyData)
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+			})
+			.catch((error) => console.error(error));
 	};
 </script>
 
@@ -90,8 +114,8 @@
 	<Button>빙고 체크해주기</Button>
 
 	<Block class="flex space-x-2">
-		<Button onClick={gotoMain}>메인</Button>
-		<Button>새로고침</Button>
+		<Button onClick={() => goto('/')}>메인</Button>
+		<Button onClick={getBingoBoard}>새로고침</Button>
 	</Block>
 </Page>
 
@@ -104,8 +128,6 @@
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
-	}
-	.checked {
-		background-color: #ffffff; /* 빙고 체크시 배경색 변경 */
+		text-align: center;
 	}
 </style>

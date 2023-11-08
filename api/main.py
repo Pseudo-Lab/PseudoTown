@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 import auth.router
+import bingo.router
 from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
 app.include_router(auth.router.router)
+app.include_router(bingo.router.router)
 
 origins = ["*"]
 app.add_middleware(
