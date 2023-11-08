@@ -24,3 +24,14 @@ jobs:
     - name: Set up Docker Compose
       run: |
         docker compose up -d --build
+
+    - name: API server health check
+      run: |
+        response_code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/hc)
+        
+        if [ $response_code -eq 200 ]; then
+          echo "API server is healthy (HTTP $response_code)"
+        else
+          echo "API server is not healthy (HTTP $response_code)"
+          exit 1
+        fi
