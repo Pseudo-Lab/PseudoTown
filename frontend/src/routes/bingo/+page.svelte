@@ -1,12 +1,13 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { Page, Navbar, Block, Button, List } from 'konsta/svelte';
+	import { Page, Navbar, Block, Button, List, ListInput } from 'konsta/svelte';
 	import { onMount } from 'svelte';
 	import { bingoInfo } from '../bingoInfo.svelte';
 	import { apiUrl } from '../globalVars.svelte';
 	let user_id = '';
 	let my_bingo = [];
 	let board = [];
+	let send_id = -1;
 
 	console.log(bingoInfo);
 
@@ -15,14 +16,14 @@
 		board.push(new Array());
 		for (let x = 0; x < bingo_size; ++x) {
 			board[y].push(y * bingo_size + x);
-			//board[y].push(0);
 		}
 	}
 	console.log(board);
 
 	const getBingoBoard = () => {
 		fetch(`${apiUrl}/bingo/${user_id}`, {
-			method: 'GET'
+			method: 'GET',
+			cache: 'no-cache'
 		})
 			.then((response) => response.json())
 			.then((data) => {
@@ -60,22 +61,23 @@
 			goto('/login');
 		}
 		my_bingo = sessionStorage.getItem('bingo');
+		my_bingo = my_bingo.split(',').map((str) => Number(str));
 		console.log(user_id, my_bingo);
 
 		// api로 내 빙고판 가져오기
 		getBingoBoard();
 	});
 
-	const sendBingoBoard = (send_id) => {
-		if (user_id == send_id) {
-			console.log('보내는 사람과 받는 사람이 같습니다.');
+	const sendBingoBoard = () => {
+		if (user_id == send_id || send_id == -1) {
+			console.log('보내는 사람과 받는 사람이 같거나 잘못된 번호입니다');
 			return;
 		}
 
 		let bodyData = {
 			bingo: my_bingo
 		};
-		fetch(`${apiUrl}/bingo/${user_id}/add`, {
+		fetch(`${apiUrl}/bingo/${send_id}/add`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -105,14 +107,22 @@
 							: bingoInfo[rowIndex * bingo_size + colIndex].color}
 					>
 						{bingoInfo[rowIndex * bingo_size + colIndex].value}
-
 					</div>
 				{/each}
 			{/each}
 		</div>
 	</Block>
 
-	<Button>빙고 체크해주기</Button>
+	<List strongIos insetIos>
+		<ListInput
+			label="상대 ID 입력"
+			type="int"
+			onInput={(e) => {
+				send_id = e.target.value;
+			}}
+		/>
+		<Button onClick={sendBingoBoard}>빙고 체크해주기</Button>
+	</List>
 
 	<Block class="flex space-x-2">
 		<Button onClick={() => goto('/')}>메인</Button>
@@ -129,6 +139,9 @@
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
+		text-align: center;
+	}
+	.text_center {
 		text-align: center;
 	}
 </style>

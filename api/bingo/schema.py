@@ -7,4 +7,4 @@ class Board(BaseModel):
 
 
 class Bingo(BaseModel):
-    bingo: List[int]
+    bingo: List
