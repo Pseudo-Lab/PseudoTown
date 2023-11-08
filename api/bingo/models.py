@@ -3,6 +3,7 @@ from utils.db import engine
 from typing import List
 
 BOARD_XY = 5
+MAGIC_NUM = 1000
 
 
 class BingoBoard(Model):
@@ -32,13 +33,14 @@ class BingoBoard(Model):
     @classmethod
     async def add_bingo_to_board(cls, user_id: int, board: List[int]) -> dict:
         find_board = await engine.find_one(cls, cls.user_id == user_id)
-        if find_board:
+        if not find_board:
             return {"ok": False, "message": "해당 유저의 빙고보드를 찾을 수 없습니다"}
 
         for num in board:
-            x = num / BOARD_XY
-            y = num % BOARD_XY
-            find_board.board[y][x] = 0
+            x = num % BOARD_XY
+            y = int(num / BOARD_XY)
+            if find_board.board[y][x] < MAGIC_NUM:
+                find_board.board[y][x] -= MAGIC_NUM
 
         result = await engine.save(find_board)
         if not result:
