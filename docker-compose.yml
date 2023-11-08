@@ -8,3 +8,14 @@ services:
       - "8000:8000"
     environment:
       - DB_KEY=${DB_KEY}
+  
+  frontend:
+    build: 
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:3000"
+      - "5173:5173"
+    environment:
+      - API_URL=http://localhost:8000
+
