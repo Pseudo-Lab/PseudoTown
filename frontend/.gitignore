@@ -156,3 +156,5 @@ dist
 
 .svelte-kit/
 package
+
+!lib
