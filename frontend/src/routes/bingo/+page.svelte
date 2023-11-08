@@ -94,7 +94,7 @@
 	<Navbar title="네트워킹 ID {user_id}" />
 
 	<Block>
-		<div class="grid grid-cols-5 gap-4">
+		<div class="grid grid-cols-5 gap-1">
 			{#each board as row, rowIndex (row)}
 				{#each row as cell, colIndex (cell)}
 					<div
@@ -105,6 +105,7 @@
 							: bingoInfo[rowIndex * bingo_size + colIndex].color}
 					>
 						{bingoInfo[rowIndex * bingo_size + colIndex].value}
+
 					</div>
 				{/each}
 			{/each}
@@ -123,7 +124,7 @@
 	.cell {
 		width: 80px;
 		height: 80px;
-		border: 2px solid;
+		border: 2px solid #000;
 		display: flex;
 		align-items: center;
 		justify-content: center;
