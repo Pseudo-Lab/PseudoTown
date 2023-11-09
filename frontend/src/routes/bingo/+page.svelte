@@ -70,7 +70,7 @@
 
 	const sendBingoBoard = () => {
 		if (user_id == send_id || send_id == -1) {
-			console.log('보내는 사람과 받는 사람이 같거나 잘못된 번호입니다');
+			alert('보내는 사람과 받는 사람이 같거나 잘못된 번호입니다.');
 			return;
 		}
 
@@ -87,8 +87,12 @@
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data);
+				alert('빙고 전송에 성공하였습니다!');
 			})
-			.catch((error) => console.error(error));
+			.catch((error) => {
+				alert('빙고 전송에 실패! 재시도가 필요합니다.');
+				console.error(error);
+			});
 	};
 </script>
 
@@ -139,9 +143,6 @@
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
-		text-align: center;
-	}
-	.text_center {
 		text-align: center;
 	}
 </style>
