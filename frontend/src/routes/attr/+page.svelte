@@ -12,9 +12,7 @@
 	onMount(async () => {
 		user_id = sessionStorage.getItem('user_id');
 		if (!user_id) goto('/login');
-		let my_attr_item = sessionStorage.getItem('my_attr');
-		if (my_attr_item) goto('/');
-		my_attr = [0, 0, 0];
+		getAttribute();
 	});
 
 	const getAttribute = () => {
@@ -23,8 +21,9 @@
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
-				if (data.ok == true) my_attr = data.attribute;
+				console.log(data.ok, data.attribute);
+				if (data.ok === true) goto('/');
+				else my_attr = [0, 0, 0];
 			})
 			.catch((error) => console.error(error));
 	};
