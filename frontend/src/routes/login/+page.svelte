@@ -73,14 +73,14 @@
 				{/if}
 			{/each}
 		</ListInput>
-		<ListInput label="나를 표현할 수 있는 3가지 - 2" dropdown type="select" onChange={(e) => {my_bingo[0] = e.target.value}}>
+		<ListInput label="나를 표현할 수 있는 3가지 - 2" dropdown type="select" onChange={(e) => {my_bingo[1] = e.target.value}}>
 			{#each bingoInfo as data, index (data)}
 				{#if !(excludeBingoSelect.includes(index))} 
 					<option value={index}>{data.value}</option>
 				{/if}
 			{/each}
 		</ListInput>
-		<ListInput label="나를 표현할 수 있는 3가지 - 3" dropdown type="select" onChange={(e) => {my_bingo[0] = e.target.value}}>
+		<ListInput label="나를 표현할 수 있는 3가지 - 3" dropdown type="select" onChange={(e) => {my_bingo[2] = e.target.value}}>
 			{#each bingoInfo as data, index (data)}
 				{#if !(excludeBingoSelect.includes(index))} 
 					<option value={index}>{data.value}</option>
