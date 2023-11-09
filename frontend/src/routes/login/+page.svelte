@@ -10,7 +10,9 @@
 
 	onMount(async () => {
 		user_id = sessionStorage.getItem('user_id');
+		let my_attr = sessionStorage.getItem('my_attr');
 		if (user_id) {
+			if (!my_attr) goto('/attr');
 			goto('/');
 		}
 	});
@@ -48,7 +50,7 @@
 	<List strongIos insetIos>
 		<ListInput label="이름" type="text" placeholder="이름을 입력하세요" onInput={onNameChange} />
 		<ListInput
-			label="디스코드 사용자명"
+			label="디스코드 사용자명 (네트워킹 추첨 이벤트 당첨시 전달용)"
 			type="text"
 			placeholder="디스코드 설정 - 내 계정 - 사용자명"
 			onInput={onDiscordChange}
