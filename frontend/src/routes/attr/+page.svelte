@@ -7,6 +7,7 @@
 
 	let user_id = -1;
 	let my_attr = [-1, -1, -1];
+	const excludeBingoSelect = [12];
 
 	onMount(async () => {
 		user_id = sessionStorage.getItem('user_id');
@@ -65,7 +66,9 @@
 			}}
 		>
 			{#each bingoInfo as data, index (data)}
-				<option value={index}>{data.value}</option>
+				{#if !excludeBingoSelect.includes(index)}
+					<option value={index}>{data.value}</option>
+				{/if}
 			{/each}
 		</ListInput>
 		<ListInput
@@ -77,7 +80,9 @@
 			}}
 		>
 			{#each bingoInfo as data, index (data)}
-				<option value={index}>{data.value}</option>
+				{#if !excludeBingoSelect.includes(index)}
+					<option value={index}>{data.value}</option>
+				{/if}
 			{/each}
 		</ListInput>
 		<ListInput
@@ -89,7 +94,9 @@
 			}}
 		>
 			{#each bingoInfo as data, index (data)}
-				<option value={index}>{data.value}</option>
+				{#if !excludeBingoSelect.includes(index)}
+					<option value={index}>{data.value}</option>
+				{/if}
 			{/each}
 		</ListInput>
 	</List>
