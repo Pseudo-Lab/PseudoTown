@@ -22,8 +22,10 @@
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data.ok, data.attribute);
-				if (data.ok === true) goto('/');
-				else my_attr = [0, 0, 0];
+				if (data.ok === true) {
+					sessionStorage.setItem('my_attr', data.attribute);
+					goto('/');
+				} else my_attr = [0, 0, 0];
 			})
 			.catch((error) => console.error(error));
 	};
