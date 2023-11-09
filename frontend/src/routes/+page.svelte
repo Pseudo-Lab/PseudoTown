@@ -3,21 +3,20 @@
 	import { Page, Navbar, Block, Button, List } from 'konsta/svelte';
 	import { onMount } from 'svelte';
 	let user_id = '';
-	let bingo = [];
 
 	onMount(async () => {
 		user_id = sessionStorage.getItem('user_id');
-		if (!user_id) {
-			console.log('');
-			goto('/login');
-		}
-		bingo = sessionStorage.getItem('bingo');
-		console.log(user_id, bingo);
+		if (!user_id) goto('/login');
+
+		let my_attr = sessionStorage.getItem('my_attr');
+		if (!my_attr) goto('/attr');
+
+		console.log(user_id, my_attr);
 	});
 
 	const onLogout = (e) => {
 		sessionStorage.setItem('user_id', '');
-		sessionStorage.setItem('bingo', []);
+		sessionStorage.setItem('my_attr', '');
 		goto('/login');
 	};
 </script>

@@ -11,9 +11,10 @@
 
 	onMount(async () => {
 		user_id = sessionStorage.getItem('user_id');
-		if (user_id == null) goto('/login');
-		getAttribute();
-		if (my_attr[0] != -1) goto('/');
+		if (!user_id) goto('/login');
+		let my_attr_item = sessionStorage.getItem('my_attr');
+		if (my_attr_item) goto('/');
+		my_attr = [0, 0, 0];
 	});
 
 	const getAttribute = () => {
@@ -48,6 +49,7 @@
 		})
 			.then((response) => response.json())
 			.then((data) => {
+				sessionStorage.setItem('my_attr', my_attr);
 				if (data.ok == true) goto('/');
 			})
 			.catch((error) => console.error(error));
@@ -67,7 +69,7 @@
 		>
 			{#each bingoInfo as data, index (data)}
 				{#if !excludeBingoSelect.includes(index)}
-					<option value={index}>{data.value}</option>
+					<option class="list-input" value={index}>{data.value}</option>
 				{/if}
 			{/each}
 		</ListInput>
@@ -81,7 +83,7 @@
 		>
 			{#each bingoInfo as data, index (data)}
 				{#if !excludeBingoSelect.includes(index)}
-					<option value={index}>{data.value}</option>
+					<option class="list-input" value={index}>{data.value}</option>
 				{/if}
 			{/each}
 		</ListInput>
@@ -95,7 +97,7 @@
 		>
 			{#each bingoInfo as data, index (data)}
 				{#if !excludeBingoSelect.includes(index)}
-					<option value={index}>{data.value}</option>
+					<option class="list-input" value={index}>{data.value}</option>
 				{/if}
 			{/each}
 		</ListInput>
@@ -104,4 +106,8 @@
 </Page>
 
 <style>
+	.list-input {
+		background-color: white;
+		color: black;
+	}
 </style>
