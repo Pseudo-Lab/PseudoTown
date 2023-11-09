@@ -93,7 +93,7 @@
 </script>
 
 <Page>
-	<Navbar title="네트워킹 ID {user_id}" titleFontSizeIos="text-[30px]" />
+	<Navbar title="My ID {user_id}" titleFontSizeIos="text-[30px]" />
 
 	<Block>
 		<div class="grid grid-cols-5 gap-1">
