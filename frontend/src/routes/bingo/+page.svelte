@@ -75,7 +75,7 @@
 		}
 
 		let bodyData = {
-			bingo: my_bingo
+			user_id: user_id
 		};
 		fetch(`${apiUrl}/bingo/${send_id}/add`, {
 			method: 'POST',
@@ -93,7 +93,7 @@
 </script>
 
 <Page>
-	<Navbar title="네트워킹 ID {user_id}" />
+	<Navbar title="네트워킹 ID {user_id}" titleFontSizeIos="text-[30px]" />
 
 	<Block>
 		<div class="grid grid-cols-5 gap-1">

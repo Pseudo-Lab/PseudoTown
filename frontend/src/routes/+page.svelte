@@ -23,7 +23,7 @@
 </script>
 
 <Page>
-	<Navbar title="네트워킹 ID {user_id}" />
+	<Navbar title="네트워킹 ID {user_id}" titleFontSizeIos="text-[30px]" />
 
 	<Block class="flex space-x-2">
 		<!-- <Button large outline class="question-list-btn" href="/question-list">Q&A 목록</Button> -->

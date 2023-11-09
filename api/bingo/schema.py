@@ -6,5 +6,9 @@ class Board(BaseModel):
     board: List[List[int]]
 
 
-class Bingo(BaseModel):
-    bingo: List
+class UserID(BaseModel):
+    user_id: int
+
+
+class Attr(BaseModel):
+    attribute: List[int]
