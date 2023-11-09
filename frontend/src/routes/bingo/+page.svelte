@@ -60,10 +60,6 @@
 			console.log('');
 			goto('/login');
 		}
-		my_bingo = sessionStorage.getItem('bingo');
-		my_bingo = my_bingo.split(',').map((str) => Number(str));
-		console.log(user_id, my_bingo);
-
 		// api로 내 빙고판 가져오기
 		getBingoBoard();
 	});
