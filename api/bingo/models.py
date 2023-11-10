@@ -41,7 +41,7 @@ class BingoBoard(Model):
         find_board = await engine.find_one(cls, cls.user_id == user_id)
         if not find_board:
             return {"ok": False, "message": "빙고보드 없음, 갱신 필요"}
-        return {"ok": True, "board": find_board.board}
+        return {"ok": True, "board": find_board.board, "gave_ids": find_board.gave_ids}
 
     @classmethod
     async def new_board(cls, user_id: int, board: List[List[int]]) -> dict:
@@ -69,7 +69,8 @@ class BingoBoard(Model):
             if find_board.board[y][x] < MAGIC_NUM:
                 find_board.board[y][x] -= MAGIC_NUM
 
-        find_board.gave_ids.append(user_id)
+        if user_id not in find_board.gave_ids:
+            find_board.gave_ids.append(gave_user_id)
 
         result = await engine.save(find_board)
         if not result:
