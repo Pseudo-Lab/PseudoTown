@@ -1,15 +1,15 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { Page, Navbar, Block, Button, List, ListInput } from 'konsta/svelte';
+	import { Page, Navbar, Block, Button, List, ListItem, ListInput } from 'konsta/svelte';
 	import { onMount } from 'svelte';
 	import { bingoInfo } from '../bingoInfo.svelte';
 	import { apiUrl } from '../globalVars.svelte';
 	let user_id = '';
-	let my_bingo = [];
+	let my_attr = [];
 	let board = [];
 	let send_id = -1;
 
-	console.log(bingoInfo);
+	//console.log(bingoInfo);
 
 	const bingo_size = 5;
 	for (let y = 0; y < bingo_size; ++y) {
@@ -18,7 +18,21 @@
 			board[y].push(y * bingo_size + x);
 		}
 	}
-	console.log(board);
+	//console.log(board);
+
+	onMount(async () => {
+		user_id = sessionStorage.getItem('user_id');
+		if (!user_id) {
+			console.log('');
+			goto('/login');
+		}
+		// api로 내 빙고판 가져오기
+		getBingoBoard();
+
+		let attr = sessionStorage.getItem('my_attr');
+		my_attr = attr?.split(',');
+		//console.log(my_attr);
+	});
 
 	const getBingoBoard = () => {
 		fetch(`${apiUrl}/bingo/${user_id}`, {
@@ -54,16 +68,6 @@
 			.catch((error) => console.error(error));
 	};
 
-	onMount(async () => {
-		user_id = sessionStorage.getItem('user_id');
-		if (!user_id) {
-			console.log('');
-			goto('/login');
-		}
-		// api로 내 빙고판 가져오기
-		getBingoBoard();
-	});
-
 	const sendBingoBoard = () => {
 		if (user_id == send_id || send_id == -1) {
 			alert('보내는 사람과 받는 사람이 같거나 잘못된 번호입니다.');
@@ -82,7 +86,7 @@
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
+				//console.log(data);
 				alert('빙고 전송에 성공하였습니다!');
 			})
 			.catch((error) => {
@@ -94,7 +98,11 @@
 
 <Page>
 	<Navbar title="My ID {user_id}" titleFontSizeIos="text-[30px]" />
-
+	<List strong>
+		{#each my_attr as attr (attr)}
+			<ListItem title={bingoInfo[attr].value} />
+		{/each}
+	</List>
 	<Block>
 		<div class="grid grid-cols-5 gap-1">
 			{#each board as row, rowIndex (row)}
@@ -132,7 +140,7 @@
 
 <style>
 	.cell {
-		width: 80px;
+		width: 16vw;
 		height: 80px;
 		border: 2px solid #000;
 		display: flex;
