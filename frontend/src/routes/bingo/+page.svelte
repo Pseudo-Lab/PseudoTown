@@ -4,10 +4,11 @@
 	import { onMount } from 'svelte';
 	import { bingoInfo } from '../bingoInfo.svelte';
 	import { apiUrl } from '../globalVars.svelte';
+
 	let user_id = '';
 	let my_attr = [];
 	let board = [];
-	let send_id = -1;
+	let send_id = '';
 
 	//console.log(bingoInfo);
 
@@ -69,8 +70,13 @@
 	};
 
 	const sendBingoBoard = () => {
-		if (user_id == send_id || send_id == -1) {
+		if (user_id == send_id || send_id == '') {
 			alert('보내는 사람과 받는 사람이 같거나 잘못된 번호입니다.');
+			return;
+		}
+
+		if (!parseInt(send_id)) {
+			alert('보내는 사람 ID를 잘못입력하셨습니다.');
 			return;
 		}
 
@@ -86,8 +92,9 @@
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				//console.log(data);
-				alert('빙고 전송에 성공하였습니다!');
+				console.log(data);
+				if (data.ok == true) alert('빙고 전송에 성공하였습니다!');
+				else alert('빙고 전송에 실패했습니다. 상대 ID 확인이 필요합니다.');
 			})
 			.catch((error) => {
 				alert('빙고 전송에 실패! 재시도가 필요합니다.');
